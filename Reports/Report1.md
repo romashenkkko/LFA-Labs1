@@ -59,10 +59,8 @@ We implemented a **Grammar** class with:
 - A **method to generate valid strings**.
 
 #### Example Function: Generating Strings
-```
-               ....
-
-    while (sequence.Any(c => VN.Contains(c)))
+```csharp
+              while (sequence.Any(c => VN.Contains(c)))
     {
         for (int i = 0; i < sequence.Count; i++)
         {
@@ -77,7 +75,6 @@ We implemented a **Grammar** class with:
                 break;
             }
         }
-          ....
  
 ```
 This function expands a string step by step until it consists only of terminal symbols.
