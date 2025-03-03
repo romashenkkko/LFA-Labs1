@@ -2,10 +2,6 @@
 
 ## 1. Theoretical Background
 
-# Formal Languages and Automata - Laboratory Report
-
-## 1. Theoretical Background
-
 ### 1.1 Alphabet
 An alphabet is a finite set of symbols used to construct strings in a formal language. It is typically denoted by \( \Sigma \). In our case, the alphabet consists of:
 These symbols are the building blocks of the language derived from our given grammar. Formal languages are essential for defining structured communication between machines, humans, or systems. They establish a precise way to represent information, ensuring consistency and eliminating ambiguity. Formal languages play a critical role in computer science, particularly in programming languages, compilers, artificial intelligence, cryptography, and data validation. They are used to describe syntax in programming, define automata in computational models, and facilitate language processing in artificial intelligence and natural language processing systems. Additionally, they are applied in network protocols, database query languages, and security models to ensure structured and rule-based data processing.
@@ -89,7 +85,8 @@ We created a **FiniteAutomaton** class, which:
 - Uses a **transition function** to move between states.
 - Checks whether an input string belongs to the language.
 
-#### Example Function: Checking Language Membership
+#### Example Function: Testing The Grammar Function
+One of the key functionalities implemented in our finite automaton is the ability to check whether a given string belongs to the language defined by our grammar. This is accomplished using the following function:
 ```csharp
 public bool StringBelongToLanguage(string input)
 {
@@ -105,7 +102,9 @@ public bool StringBelongToLanguage(string input)
     return F.Contains(currentState);
 }
 ```
-This function verifies if a given string follows valid transitions in the automaton.
+This function takes an input string and processes it step by step to determine if it follows valid state transitions in the automaton. The currentState variable is initialized to the start state , and each character of the input string is checked against the transition function . If at any point the transition is not defined (i.e., the symbol is not in the alphabet or there is no valid transition from the current state), the function returns false, indicating that the string is not valid. Otherwise, it updates the currentState accordingly and continues checking the remaining characters.
+
+Once all characters are processed, the function checks whether the final state is one of the accepting states . If it is, the function returns true, confirming that the input string is valid within the language. This approach ensures that our automaton correctly recognizes strings that conform to the grammar rules while rejecting those that do not.
 
 ## 4. Conclusion
 
