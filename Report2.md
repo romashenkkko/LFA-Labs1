@@ -70,8 +70,8 @@ These functions assess whether the grammar fits Type 3, Type 2, or Type 1, with 
 
 The output confirms a Type 3 regular grammar classification based on the implemented grammar classification function. Below, you can insert screenshots to illustrate the results of the grammar classification and finite automaton conversions as obtained from your program execution.
 
-![Finite Automaton to Regular Grammar Conversion](lfa2.png)
-![Finite Automaton to Regular Grammar Conversion](lfa3.png)
+![Finite Automaton to Regular Grammar Conversion](lfa2.jpg)
+![Finite Automaton to Regular Grammar Conversion](lfa3.jpg)
 
 ## Conclusion
 
