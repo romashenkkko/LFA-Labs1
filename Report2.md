@@ -31,7 +31,7 @@ For a specific variant, Variant 26, the finite automaton is defined with a set o
 
 The complete implementation of Task 3 starts with converting the finite automaton to a regular grammar, following an algorithm where the non-terminals equal the states, terminals equal the alphabet, the start symbol is the initial state, and productions are built by initializing an empty set and adding rules based on transitions, such as "q" to "a qi" for each possible next state, and "q" to "a" if a final state is reachable. The next step identifies the automaton as nondeterministic due to q0 transitioning to both q0 and q1 with "a." The conversion from nondeterministic to deterministic form involves an analytical approach starting with the initial state, building a new state set, defining transitions by uniting outcomes for each input across combined states, iteratively expanding the state set until no further changes occur, and setting final states as those containing any original final states. Alternatively, a table-based method constructs state tables for both automata, marks the start state, computes combined state transitions for each input, and repeats until all states are defined, with final states including any original final states.
 
-'''csharp
+```csharp
  private bool IsType3()
     {
         foreach (var rule in P)
@@ -64,7 +64,7 @@ The complete implementation of Task 3 starts with converting the finite automato
         return true;
     }
 
-'''
+```
 These functions assess whether the grammar fits Type 3, Type 2, or Type 1, with Type 0 being any grammar not perfectly matching the previous three. For instance, the IsType3 function checks if productions are either a single terminal or a terminal followed by a non-terminal, adhering to the rules of regular grammars. The IsType2 function verifies that all left-hand sides of productions are non-terminals, fitting the context-free grammar definition. The IsType1 function ensures that the right-hand side of each production is at least as long as the left-hand side, aligning with context-sensitive grammar constraints. A Program2.cs class then outputs these findings by creating a grammar object, calling the classification methods, and printing results based on a switch statement identifying the grammar as regular, context-free, context-sensitive, or unrestricted.
 ## Results
 
@@ -72,7 +72,17 @@ The output confirms a Type 3 regular grammar classification based on the impleme
 
 ![Finite Automaton to Regular Grammar Conversion](lfa2.jpg)
 ![Finite Automaton to Regular Grammar Conversion](lfa3.jpg)
-
+```csharp
+ public void TestClassification()
+ {
+     Console.WriteLine("Generated Strings:");
+     for (int i = 0; i < 5; i++)
+     {
+         Console.WriteLine(GenerateString());
+     }
+     Console.WriteLine("\nGrammar Type: " + GetChomskyTypeDescription());
+ }
+```
 ## Conclusion
 
 In conclusion, this work delves into implementing and analyzing fundamental concepts of formal language theory, focusing on grammars and finite automata. The second task successfully developed a method to classify a grammar’s Chomsky type by examining production rule structures, distinguishing between unrestricted, context-sensitive, context-free, and regular grammars. The third task, planned for future execution, involves converting finite automata to regular grammars, assessing determinism, transforming nondeterministic automata to deterministic ones, and optionally visualizing automata graphically. These efforts solidify the equivalence between nondeterministic and deterministic automata, enhance comprehension through visuals, and provide practical experience with formal language principles, establishing a robust basis for computational manipulation of such languages.
