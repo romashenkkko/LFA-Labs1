@@ -1,4 +1,8 @@
-﻿class Grammar
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Grammar
 {
     private HashSet<char> VN;
     private HashSet<char> VT;
@@ -22,80 +26,87 @@
 
     public string GenerateString()
     {
-        string result = "";
         List<char> sequence = new List<char> { S };
-
-        while (sequence.Any(c => VN.Contains(c))) 
+        while (sequence.Any(c => VN.Contains(c)))
         {
             for (int i = 0; i < sequence.Count; i++)
             {
                 char current = sequence[i];
-                if (VN.Contains(current)) 
+                if (VN.Contains(current))
                 {
                     var productions = P[current];
                     string chosenProduction = productions[random.Next(productions.Count)];
 
                     sequence.RemoveAt(i);
-                    sequence.InsertRange(i, chosenProduction.ToCharArray());
-                    break; 
+                    sequence.InsertRange(i, chosenProduction);
+                    break;
                 }
             }
         }
-
         return string.Concat(sequence);
     }
 
-
-    public FiniteAutomaton ToFiniteAutomaton()
+    public int GetChomskyType()
     {
-        return new FiniteAutomaton(VN, VT, P, S);
+        if (IsType3()) return 3;
+        if (IsType2()) return 2;
+        if (IsType1()) return 1;
+        return 0;
     }
-}
 
-class FiniteAutomaton
-{
-    private HashSet<char> Q;
-    private HashSet<char> Sigma;
-    private Dictionary<(char, char), char> Delta;
-    private char q0;
-    private HashSet<char> F;
-
-    public FiniteAutomaton(HashSet<char> vn, HashSet<char> vt, Dictionary<char, List<string>> p, char start)
+    private bool IsType3()
     {
-        Q = new HashSet<char>(vn);
-        Sigma = new HashSet<char>(vt);
-        q0 = start;
-        F = new HashSet<char> { 'B', 'C', 'A' };
-        Delta = new Dictionary<(char, char), char>();
-
-        foreach (var rule in p)
+        foreach (var rule in P)
         {
             foreach (var production in rule.Value)
             {
-                if (production.Length == 2)
-                {
-                    Delta[(rule.Key, production[0])] = production[1];
-                }
-                else
-                {
-                    Delta[(rule.Key, production[0])] = production[0];
-                }
+                bool singleTerminal = production.Length == 1 && VT.Contains(production[0]);
+                bool terminalNonTerminal = production.Length == 2 && VT.Contains(production[0]) && VN.Contains(production[1]);
+                if (!(singleTerminal || terminalNonTerminal)) return false;
             }
         }
+        return true;
     }
 
-    public bool StringBelongToLanguage(string input)
+    private bool IsType2()
     {
-        char currentState = q0;
-        foreach (char symbol in input)
+        return P.Keys.All(nonTerminal => VN.Contains(nonTerminal));
+    }
+
+    private bool IsType1()
+    {
+        foreach (var rule in P)
         {
-            if (!Sigma.Contains(symbol) || !Delta.ContainsKey((currentState, symbol)))
+            foreach (var production in rule.Value)
             {
-                return false;
+                if (production.Length < rule.Key.ToString().Length)
+                    return false;
             }
-            currentState = Delta[(currentState, symbol)];
         }
-        return F.Contains(currentState);
+        return true;
+    }
+
+    public string GetChomskyTypeDescription()
+    {
+        return GetChomskyType() switch
+        {
+            0 => "Type 0: Unrestricted Grammar",
+            1 => "Type 1: Context-Sensitive Grammar",
+            2 => "Type 2: Context-Free Grammar",
+            3 => "Type 3: Regular Grammar",
+            _ => "Unknown"
+        };
+    }
+
+    public void TestClassification()
+    {
+        Console.WriteLine("Generated Strings:");
+        for (int i = 0; i < 5; i++)
+        {
+            Console.WriteLine(GenerateString());
+        }
+        Console.WriteLine("\nGrammar Type: " + GetChomskyTypeDescription());
     }
 }
+
 
