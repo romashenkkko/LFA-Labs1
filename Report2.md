@@ -2,13 +2,28 @@
 
 ## Theoretical Part
 
-In the study of formal languages and finite automata, several key concepts come into play, such as determinism in finite automata, the process of converting a nondeterministic finite automaton to a deterministic one, and the classification of grammars according to the Chomsky hierarchy. This discussion pertains to a course on formal languages and finite automata, authored by Tatrintev Denis from the FAF-232 group. The theoretical foundation begins with the Chomsky classification, which organizes grammars into four distinct types. Type 0, known as recursively enumerable grammar, imposes no limitations on its production rules, allowing transformations like "alpha" turning into "beta." Type 1 encompasses context-sensitive grammars, where productions take the shape of "a1 A a2" transforming into "a1 Beta2," with "a1" and "a2" being strings from a combined set of non-terminal and terminal symbols, "Beta" being a non-empty string from the same set, and "A" belonging to the non-terminal symbols. This type further splits into left-context-sensitive grammars, where "a1 A" becomes "a1 Beta," and right-context-sensitive grammars, where "A a2" turns into "Beta2." Type 2, or context-free grammars, requires all productions to follow the pattern of "A" transforming into "Beta," with "A" as a non-terminal and "Beta" as a string from the union of non-terminal and terminal symbols. Finally, Type 3, the most constrained, is the regular grammar, which can be expressed in two forms: right linear grammar, where "A" becomes "a B" or just "a," with "a" as a terminal and "A" and "B" as non-terminals, and left linear grammar, where "A" transforms into "b A" or "a," adhering to similar constraints.
+In the study of formal languages and finite automata, several key concepts come into play, such as determinism in finite automata, the process of converting a nondeterministic finite automaton to a deterministic one, and the classification of grammars according to the Chomsky hierarchy. This discussion pertains to a course on formal languages and finite automata, authored by Tatrintev Denis from the FAF-232 group. The theoretical foundation begins with the Chomsky classification, which organizes grammars into four distinct types. Type 0, known as recursively enumerable grammar, imposes no limitations on its production rules, allowing transformations like "alpha" turning into "beta." 
+Type 1 encompasses context-sensitive grammars, where productions take the shape of "a1 A a2" transforming into "a1 Beta2," with "a1" and "a2" being strings from a combined set of non-terminal and terminal symbols, "Beta" being a non-empty string from the same set, and "A" belonging to the non-terminal symbols. This type further splits into left-context-sensitive grammars, where "a1 A" becomes "a1 Beta," and right-context-sensitive grammars, where "A a2" turns into "Beta2." 
+Type 2, or context-free grammars, requires all productions to follow the pattern of "A" transforming into "Beta," with "A" as a non-terminal and "Beta" as a string from the union of non-terminal and terminal symbols. Finally, 
+Type 3, the most constrained, is the regular grammar, which can be expressed in two forms: right linear grammar, where "A" becomes "a B" or just "a," with "a" as a terminal and "A" and "B" as non-terminals, and left linear grammar, where "A" transforms into "b A" or "a," adhering to similar constraints.
 
 Finite automata are another critical aspect of this study. A deterministic finite automaton is defined as a five-element structure consisting of a finite set of states, an input alphabet, a transition function mapping a state and an input symbol to a new state, an initial state from the set of states, and a subset of states designated as accepting or final states. In contrast, an ε-nondeterministic finite automaton shares a similar five-element structure but allows its transition function to map a state and either an input symbol or the empty string "ε" to a set of possible states, permitting ε-transitions and multiple state outcomes. Finite automata, in essence, act as straightforward mechanisms that process sequences of inputs like letters or numbers according to predefined rules, determining their validity.
 
 ## Objectives
 
 The objectives of this exploration include understanding the nature and utility of automata, as well as extending prior work in a shared repository and project. This involves adding a function to a grammar type or class to classify it within the Chomsky hierarchy, potentially reusing a variant from a previous lab. Based on a variant number tied to a register ID, one must define a finite automaton and perform tasks like converting it to a regular grammar, determining if it is deterministic or nondeterministic, implementing a method to transform a nondeterministic finite automaton into a deterministic one, and optionally depicting the automaton graphically for bonus consideration, possibly using external libraries, tools, or APIs to create visual representations while ensuring the program collects and submits the necessary data for the depiction.
+
+##Variant 26
+Variant 26
+Q = {q0,q1,q2,q3},
+∑ = {a,b,c},
+F = {q3},
+δ(q0,a) = q1,
+δ(q1,b) = q1,
+δ(q1,a) = q2,
+δ(q0,a) = q0,
+δ(q2,c) = q3,
+δ(q3,c) = q3 
 
 ## Implementation Description
 
@@ -55,8 +70,8 @@ These functions assess whether the grammar fits Type 3, Type 2, or Type 1, with 
 
 The output confirms a Type 3 regular grammar classification based on the implemented grammar classification function. Below, you can insert screenshots to illustrate the results of the grammar classification and finite automaton conversions as obtained from your program execution.
 
-![Finite Automaton to Regular Grammar Conversion](Reports/lfa2.png)
-![Finite Automaton to Regular Grammar Conversion](Reports/lfa3.png)
+![Finite Automaton to Regular Grammar Conversion](lfa2.png)
+![Finite Automaton to Regular Grammar Conversion](lfa3.png)
 
 ## Conclusion
 
