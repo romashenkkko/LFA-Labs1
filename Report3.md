@@ -89,8 +89,9 @@ This class performs the actual tokenization by iterating over each character in 
   ```csharp
   if (char.IsWhiteSpace(current))
   ```
+ The Tokenize() method’s core loop processes input text character by character, emphasizing whitespace handling to ensure accurate position tracking. It distinguishes newline characters (\n), which increment the line counter and reset the column counter, from other whitespace like spaces and tabs, which only increment the column counter, while also managing Windows-style line endings (\r\n) by skipping redundant characters for cross-platform support.
 
-  All whitespace characters are skipped. If a newline is encountered (`\n`), it increments the line counter.
+Whitespace is isolated from token matching with a continue statement, preventing it from being treated as a token. This separation enhances code clarity and maintainability by distinctly handling position updates and token identification. All whitespace characters are skipped. If a newline is encountered (`\n`), it increments the line counter.
 
 * **Token Matching**
 
@@ -124,8 +125,11 @@ return ch switch
     _ => null
 };
 ```
+The Tokenize() method contains a critical section where token matching occurs. Once the lexer has advanced past any whitespace, it attempts to identify a token at the current position by calling the MatchToken() method. This method performs all the pattern matching logic and returns either a valid token or null if no match is found.
 
-#### 🧠 Explanation:
+    When a token is successfully identified (not null), it's immediately added to the running list of tokens that will eventually represent the complete tokenized source code. This approach follows a sequential tokenization pattern where the input is processed from left to right, with each token being recognized and captured in order. The continuous accumulation of tokens builds up the lexical structure of the program, preserving both the semantic meaning and syntactic organization of the original source code.
+
+    The simplicity of this design belies its power - by delegating the complex pattern matching to a separate method, the main tokenization loop remains clean and focused solely on the process of token collection and whitespace handling. This separation of concerns ensures that the tokenizer is both maintainable and extensible, allowing for new token patterns to be added without disrupting the core tokenization process.
 
 Only characters `'a'`, `'b'`, `'c'`, and `'d'` are valid tokens. Any other character causes the lexer to throw an error. This simple structure is appropriate given the regular grammar's limited vocabulary.
 
