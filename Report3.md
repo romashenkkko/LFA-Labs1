@@ -8,9 +8,6 @@
 
 Lexical analysis is the first phase of a compiler or interpreter, where the source code is converted from a sequence of characters into a sequence of tokens that can be more easily processed by later phases. The component that performs this task is known as a **lexer**, **scanner**, or **tokenizer**.
 
----
-
-## 🔑 Core Concepts
 
 - **Lexemes:**  
   The actual character sequences in the source code that match a pattern for a token type.  
@@ -145,8 +142,13 @@ The `Token` class holds the following metadata for each recognized token: Type -
 new Token(TokenType.A, "a", 1, 2)
 ```
 
-This means that the character `'a'` was recognized as a token of type `A` at line 1, column 2.
+ The MatchToken() method serves as the heart of the lexer, implementing a comprehensive pattern matching system for identifying tokens in the source code. It employs a hierarchical approach to token recognition, working from simple to complex patterns.
 
+    Initially, the method checks for single-character symbols like parentheses, commas, and basic operators, which can be identified with a simple character comparison. For multi-character operators such as ==, >=, and <=, the method uses the Peek() helper function to examine the next character without advancing the position. This lookahead capability is essential for correctly distinguishing between operators like = (assignment) and == (equality comparison).
+
+    After handling symbols and operators, the method proceeds to more complex token types. For alphabetic characters or specific identifier symbols ($ or #), it reads the entire word and passes it to CreateWordToken() for classification as either a reserved keyword or an identifier. For numeric characters, it invokes MatchNumber() to parse various numeric formats. String literals are handled by ReadString(), which extracts the content between quotation marks.
+
+    This cascading approach to token matching creates a priority system where more specific patterns are checked before more general ones. If no pattern matches the current character, the method returns null, signaling to the caller that an unrecognized character has been encountered. This design provides excellent flexibility while maintaining clean, readable code structure, making it easy to understand how each token type is identified and processed during the lexical analysis phase.
 ---
 
 ### 4. **TokenType.cs** – Enum for Classifying Tokens
